@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp3.1</TargetFrameworks>
+    <TargetFrameworks>net8.0</TargetFrameworks>
     <AssemblyName>SampleConsoleApp</AssemblyName>
     <OutputType>Exe</OutputType>
     <PackageId>SampleConsoleApp</PackageId>
