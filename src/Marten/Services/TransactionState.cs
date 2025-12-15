@@ -12,6 +12,7 @@ namespace Marten.Services
         private readonly IsolationLevel _isolationLevel;
         private readonly int _commandTimeout;
         private readonly bool _ownsConnection;
+        private bool _transactionCompleted = false;
 
         public TransactionState(CommandRunnerMode mode, IsolationLevel isolationLevel, int? commandTimeout, NpgsqlConnection connection, bool ownsConnection, NpgsqlTransaction transaction = null)
         {
@@ -119,11 +120,12 @@ namespace Marten.Services
 
         public void Rollback()
         {
-            if (Transaction != null && !Transaction.IsCompleted && _mode != CommandRunnerMode.External)
+            if (Transaction != null && Transaction.Connection != null && _mode != CommandRunnerMode.External)
             {
                 try
                 {
                     Transaction.Rollback();
+                    _transactionCompleted = true;
                     Transaction.Dispose();
                     Transaction = null;
                 }
@@ -143,11 +145,12 @@ namespace Marten.Services
 
         public async Task RollbackAsync(CancellationToken token)
         {
-            if (Transaction != null && !Transaction.IsCompleted && _mode != CommandRunnerMode.External)
+            if (Transaction != null && !_transactionCompleted && _mode != CommandRunnerMode.External)
             {
                 try
                 {
                     await Transaction.RollbackAsync(token).ConfigureAwait(false);
+                    _transactionCompleted = true;
                     await Transaction.DisposeAsync().ConfigureAwait(false);
                     Transaction = null;
                 }

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <Description>.NET Transactional Document DB and Event Store on PostgreSQL</Description>
         <VersionPrefix>3.14.4</VersionPrefix>
@@ -32,11 +32,12 @@
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-        <PackageReference Include="Npgsql" Version="4.1.14" />
-        <PackageReference Include="Npgsql.Json.NET" Version="[4.1.6,4.2.0)" />
+        <PackageReference Include="Npgsql" Version="5.0.18" />
+        <PackageReference Include="Npgsql.Json.NET" Version="5.0.18" />
         <PackageReference Include="Remotion.Linq" Version="2.2.0" />
         <PackageReference Include="Baseline" Version="1.5.0" />
-        <PackageReference Include="System.Memory" Version="4.5.3" />
+        <PackageReference Include="System.Memory" Version="4.5.4" />
+        <PackageReference Include="System.Text.Encodings.Web" Version="6.0.0" />
         <PackageReference Include="System.Threading.Tasks.Dataflow" Version="4.10.0" />
         <PackageReference Include="System.Reflection.Emit.Lightweight" Version="4.6.0" />
     </ItemGroup>
@@ -57,7 +58,7 @@
 
 
     <ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="[2.0.0, 3.0.0)" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.18" />
     </ItemGroup>
 
     <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
@@ -86,5 +87,10 @@
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
+    </ItemGroup>
+    <ItemGroup Condition="'$(TargetFramework)' == 'net60'">
+      <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL">
+        <Version>6.0.0</Version>
+      </PackageReference>
     </ItemGroup>
 </Project>
